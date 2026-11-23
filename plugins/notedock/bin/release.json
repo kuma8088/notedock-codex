@@ -1,0 +1,11 @@
+{
+ "version": "0.1.0",
+ "base_url": "https://github.com/kuma8088/notedock-codex/releases/download/server-v0.1.0/",
+ "assets": {
+  "darwin-arm64": {
+   "file": "notedock-server-aarch64-apple-darwin",
+   "size": 88012226,
+   "sha256": "f254f0cde30edd292553fb07dda5fab10453c73319c6613729822158f61b8a70"
+  }
+ }
+}

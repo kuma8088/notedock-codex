@@ -1,0 +1,313 @@
+{
+ "supported_protocol_versions": [
+  "2025-11-25",
+  "2025-06-18",
+  "2025-03-26",
+  "2024-11-05",
+  "2024-10-07"
+ ],
+ "initialize": {
+  "protocolVersion": "2025-06-18",
+  "capabilities": {
+   "experimental": {
+    "codex/sandbox-state": {}
+   },
+   "resources": {
+    "listChanged": true
+   },
+   "tools": {
+    "listChanged": true
+   }
+  },
+  "serverInfo": {
+   "name": "notedock",
+   "version": "0.1.0"
+  }
+ },
+ "tools_list_ui": {
+  "tools": [
+   {
+    "name": "open_note",
+    "title": "Visual Editor",
+    "description": "開いたMarkdownを見た目を整えて表示し、許可されたフォルダーのノートを編集する。",
+    "inputSchema": {
+     "$schema": "http://json-schema.org/draft-07/schema#",
+     "type": "object",
+     "properties": {
+      "file": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string"
+        },
+        "resourceUri": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "name",
+        "resourceUri"
+       ]
+      }
+     }
+    },
+    "annotations": {
+     "readOnlyHint": true,
+     "openWorldHint": false
+    },
+    "execution": {
+     "taskSupport": "forbidden"
+    },
+    "_meta": {
+     "ui": {
+      "resourceUri": "ui://notedock/panel.html"
+     },
+     "openai/outputTemplate": "ui://notedock/panel.html",
+     "openai/ui": {
+      "entrypoints": [
+       {
+        "type": "file",
+        "extensions": [
+         ".md"
+        ]
+       }
+      ]
+     },
+     "ui/resourceUri": "ui://notedock/panel.html"
+    }
+   },
+   {
+    "name": "note_locate",
+    "description": "ホストが開いたファイルが編集できるフォルダーの中にあるかを調べる。",
+    "inputSchema": {
+     "$schema": "http://json-schema.org/draft-07/schema#",
+     "type": "object",
+     "properties": {}
+    },
+    "annotations": {
+     "readOnlyHint": true,
+     "openWorldHint": false
+    },
+    "execution": {
+     "taskSupport": "forbidden"
+    },
+    "_meta": {
+     "ui": {
+      "visibility": [
+       "app"
+      ]
+     }
+    }
+   },
+   {
+    "name": "note_api",
+    "description": "パネルからのノートの読み書き。許可されたフォルダーの中だけを扱う。",
+    "inputSchema": {
+     "$schema": "http://json-schema.org/draft-07/schema#",
+     "type": "object",
+     "properties": {
+      "method": {
+       "type": "string",
+       "enum": [
+        "GET",
+        "PUT",
+        "POST"
+       ]
+      },
+      "url": {
+       "type": "string",
+       "maxLength": 4096
+      },
+      "body": {
+       "type": "object",
+       "propertyNames": {
+        "type": "string"
+       },
+       "additionalProperties": {}
+      },
+      "root": {
+       "type": "string",
+       "maxLength": 64
+      }
+     },
+     "required": [
+      "method",
+      "url"
+     ]
+    },
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "openWorldHint": false
+    },
+    "execution": {
+     "taskSupport": "forbidden"
+    },
+    "_meta": {
+     "ui": {
+      "visibility": [
+       "app"
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "resources_list": {
+  "resources": [
+   {
+    "uri": "ui://notedock/panel.html",
+    "name": "NoteDock",
+    "mimeType": "text/html;profile=mcp-app"
+   }
+  ]
+ },
+ "resource_templates_list": {
+  "resourceTemplates": []
+ },
+ "panel_resource": {
+  "uri": "ui://notedock/panel.html",
+  "mimeType": "text/html;profile=mcp-app",
+  "_meta": {
+   "ui": {
+    "prefersBorder": false,
+    "csp": {
+     "connectDomains": [],
+     "resourceDomains": []
+    },
+    "permissions": {
+     "clipboardWrite": {}
+    }
+   }
+  }
+ },
+ "tools_list_no_ui": {
+  "tools": [
+   {
+    "name": "open_note",
+    "title": "Visual Editor",
+    "description": "開いたMarkdownを見た目を整えて表示し、許可されたフォルダーのノートを編集する。",
+    "inputSchema": {
+     "$schema": "http://json-schema.org/draft-07/schema#",
+     "type": "object",
+     "properties": {
+      "file": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string"
+        },
+        "resourceUri": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "name",
+        "resourceUri"
+       ]
+      }
+     }
+    },
+    "annotations": {
+     "readOnlyHint": true,
+     "openWorldHint": false
+    },
+    "execution": {
+     "taskSupport": "forbidden"
+    },
+    "_meta": {
+     "ui": {
+      "resourceUri": "ui://notedock/panel.html"
+     },
+     "openai/outputTemplate": "ui://notedock/panel.html",
+     "openai/ui": {
+      "entrypoints": [
+       {
+        "type": "file",
+        "extensions": [
+         ".md"
+        ]
+       }
+      ]
+     },
+     "ui/resourceUri": "ui://notedock/panel.html"
+    }
+   },
+   {
+    "name": "note_locate",
+    "description": "ホストが開いたファイルが編集できるフォルダーの中にあるかを調べる。",
+    "inputSchema": {
+     "$schema": "http://json-schema.org/draft-07/schema#",
+     "type": "object",
+     "properties": {}
+    },
+    "annotations": {
+     "readOnlyHint": true,
+     "openWorldHint": false
+    },
+    "execution": {
+     "taskSupport": "forbidden"
+    },
+    "_meta": {
+     "ui": {
+      "visibility": [
+       "app"
+      ]
+     }
+    }
+   },
+   {
+    "name": "note_api",
+    "description": "パネルからのノートの読み書き。許可されたフォルダーの中だけを扱う。",
+    "inputSchema": {
+     "$schema": "http://json-schema.org/draft-07/schema#",
+     "type": "object",
+     "properties": {
+      "method": {
+       "type": "string",
+       "enum": [
+        "GET",
+        "PUT",
+        "POST"
+       ]
+      },
+      "url": {
+       "type": "string",
+       "maxLength": 4096
+      },
+      "body": {
+       "type": "object",
+       "propertyNames": {
+        "type": "string"
+       },
+       "additionalProperties": {}
+      },
+      "root": {
+       "type": "string",
+       "maxLength": 64
+      }
+     },
+     "required": [
+      "method",
+      "url"
+     ]
+    },
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "openWorldHint": false
+    },
+    "execution": {
+     "taskSupport": "forbidden"
+    },
+    "_meta": {
+     "ui": {
+      "visibility": [
+       "app"
+      ]
+     }
+    }
+   }
+  ]
+ }
+}
