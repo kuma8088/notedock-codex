@@ -1,0 +1,15 @@
+{
+  "_comment": "Third-party code that another package already bundled into its own files. The license files sit in licenses/embedded/<dir>/. They were taken from the npm tarballs of these exact versions on 2026-11-15 (sha512 matched the registry), except web-worker, whose notice is copied from elkjs's own bundle.",
+  "packages": [
+    { "name": "langium", "version": "4.4.0", "license": "MIT", "inside": "@mermaid-js/parser", "source": "https://github.com/eclipse-langium/langium", "dir": "langium-4.4.0" },
+    { "name": "chevrotain-allstar", "version": "0.5.0", "license": "MIT", "inside": "@mermaid-js/parser", "source": "https://github.com/TypeFox/chevrotain-allstar", "dir": "chevrotain-allstar-0.5.0" },
+    { "name": "vscode-jsonrpc", "version": "9.0.3", "license": "MIT", "inside": "@mermaid-js/parser", "source": "https://github.com/Microsoft/vscode-languageserver-node", "dir": "vscode-jsonrpc-9.0.3" },
+    { "name": "vscode-languageserver-protocol", "version": "3.18.4", "license": "MIT", "inside": "@mermaid-js/parser", "source": "https://github.com/Microsoft/vscode-languageserver-node", "dir": "vscode-languageserver-protocol-3.18.4" },
+    { "name": "vscode-languageserver-textdocument", "version": "1.0.15", "license": "MIT", "inside": "@mermaid-js/parser", "source": "https://github.com/Microsoft/vscode-languageserver-node", "dir": "vscode-languageserver-textdocument-1.0.15" },
+    { "name": "vscode-languageserver-types", "version": "3.18.4", "license": "MIT", "inside": "@mermaid-js/parser", "source": "https://github.com/Microsoft/vscode-languageserver-node", "dir": "vscode-languageserver-types-3.18.4" },
+    { "name": "vscode-uri", "version": "3.1.0", "license": "MIT", "inside": "@mermaid-js/parser", "source": "https://github.com/microsoft/vscode-uri", "dir": "vscode-uri-3.1.0" },
+    { "name": "js-yaml", "version": "4.3.0", "license": "MIT", "inside": "mermaid", "source": "https://github.com/nodeca/js-yaml", "dir": "js-yaml-4.3.0" },
+    { "name": "fastdom", "version": "1.0.12", "license": "MIT", "inside": "mermaid", "source": "https://github.com/wilsonpage/fastdom", "dir": "fastdom-1.0.12", "note": "The package has no license file; the text is the License section of its README. Mermaid applies its own patch to it." },
+    { "name": "web-worker", "version": "1.x", "license": "Apache-2.0", "inside": "elkjs", "source": "https://github.com/developit/web-worker", "dir": "web-worker", "marker": "Copyright 2020 Google LLC", "note": "elkjs bundles it into lib/elk.bundled.js; the exact version is not recorded there." }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "notedock": {
+      "type": "stdio",
+      "command": "./bin/notedock",
+      "cwd": ".",
+      "args": []
+    }
+  }
+}

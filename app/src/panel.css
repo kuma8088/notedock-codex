@@ -1,0 +1,18 @@
+/* This panel never shows the paste hint. */
+#paste-hint {
+  display: none !important;
+}
+
+#nav-back,
+#nav-forward {
+  min-width: 26px;
+  padding-inline: 4px;
+}
+
+#nav-back:disabled,
+#nav-forward:disabled,
+#copy-path:disabled,
+#new-note:disabled {
+  opacity: 0.35;
+  cursor: default;
+}

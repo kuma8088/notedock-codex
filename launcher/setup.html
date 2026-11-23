@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="notedock-setup" content="1">
+<title>NoteDock の準備</title>
+<style>
+  :root { color-scheme: light dark; --fg: #1f1f1f; --muted: #666; --bg: #fff; --line: #ddd; --accent: #0b63ce; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #eee; --muted: #aaa; --bg: #1e1e1e; --line: #444; --accent: #5aa2ff; } }
+  html[data-theme=dark] { --fg: #eee; --muted: #aaa; --bg: #1e1e1e; --line: #444; --accent: #5aa2ff; }
+  html[data-theme=light] { --fg: #1f1f1f; --muted: #666; --bg: #fff; --line: #ddd; --accent: #0b63ce; }
+  body { margin: 0; font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; color: var(--fg); background: var(--bg); }
+  main { max-width: 520px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 17px; margin: 0 0 12px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); font-size: 13px; }
+  button { font: inherit; padding: 8px 16px; border-radius: 8px; border: 0; background: var(--accent); color: #fff; cursor: pointer; }
+  button[disabled] { opacity: .5; cursor: default; }
+  .bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; margin: 12px 0 6px; }
+  .bar > div { height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  .err { color: #c62828; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>NoteDock を使う準備</h1>
+  <p id="lead">NoteDock のサーバーが、まだこの Mac にありません。初回だけ、GitHub から約{{SIZE_MB}}MB のファイルを取ってきます。取ってきたファイルは、指紋（SHA-256）を確かめてから使います。</p>
+  <p><button id="go">サーバーを取ってくる（約{{SIZE_MB}}MB）</button></p>
+  <div id="prog" hidden><div class="bar"><div id="fill"></div></div><p class="muted" id="ptext"></p></div>
+  <p id="msg" class="err" hidden></p>
+  <p class="muted">会社のプロキシの下では取ってこられないことがあります。</p>
+</main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id)
+  const PANEL = 'ui://notedock/panel.html'
+  let nextId = 1
+  const waiting = new Map()
+  let toolInput = null
+  const post = (m) => window.parent.postMessage(Object.assign({ jsonrpc: '2.0' }, m), '*')
+  const rpc = (method, params) => new Promise((resolve, reject) => {
+    const id = 'setup-' + nextId++
+    waiting.set(id, { resolve, reject })
+    post({ id, method, params })
+  })
+  const applyTheme = (ctx) => { if (ctx && ctx.theme) document.documentElement.dataset.theme = ctx.theme }
+  window.addEventListener('message', (e) => {
+    if (e.source !== window.parent) return
+    const m = e.data
+    if (!m || m.jsonrpc !== '2.0') return
+    if (m.id !== undefined && waiting.has(m.id) && !m.method) {
+      const w = waiting.get(m.id); waiting.delete(m.id)
+      if (m.error) w.reject(new Error(m.error.message || 'error')); else w.resolve(m.result)
+      return
+    }
+    if (m.method === 'ui/notifications/tool-input') toolInput = m.params
+    else if (m.method === 'ui/notifications/host-context-changed') applyTheme(m.params)
+    else if (m.id !== undefined && m.method) post({ id: m.id, result: {} }) // ui/resource-teardown など
+  })
+  const mb = (n) => (n / 1e6).toFixed(1)
+  const show = (s) => {
+    const busy = s.state === 'downloading'
+    $('go').disabled = busy || s.state === 'unsupported'
+    $('prog').hidden = !busy
+    if (busy) {
+      const pct = s.total ? Math.min(100, Math.round(s.bytes * 100 / s.total)) : 0
+      $('fill').style.width = pct + '%'
+      $('ptext').textContent = '取ってきています… ' + mb(s.bytes) + 'MB ／ ' + mb(s.total) + 'MB'
+    }
+    const msg = s.state === 'failed' ? (s.kind === 'interrupted' ? '前回は取ってくる途中で止まりました。もう一度押すと、最初から取り直します。' : '取ってこられませんでした。' + s.reason + '　もう一度押すと取り直します。')
+      : s.state === 'unsupported' ? s.reason : ''
+    $('msg').hidden = !msg
+    $('msg').textContent = msg
+    $('go').textContent = s.state === 'failed' ? 'もう一度取ってくる' : 'サーバーを取ってくる（約{{SIZE_MB}}MB）'
+  }
+  const api = async (method, url) => {
+    const r = await rpc('tools/call', { name: 'note_api', arguments: { method, url, body: {} } })
+    return (r && r.structuredContent) || {}
+  }
+  // 本物のパネルを取ってきて、この画面と入れ替える（Codex に読み直してもらわない）。
+  // 本物のパネルは開いたファイルを tool-input でしか知らないので、受け取っていたものを渡し直す。
+  function handover(input) {
+    if (!input) return
+    let done = false
+    window.addEventListener('message', (e) => {
+      const m = e.data
+      if (done || e.source !== window.parent || !m || m.jsonrpc !== '2.0' || !m.result || !m.result.protocolVersion || !m.result.hostCapabilities) return
+      done = true
+      // 本物のパネルの受け口が遅れて付いても取りこぼさないように、間をあけて3回渡す（パネルは2回目から読み捨てる）
+      for (const ms of [50, 500, 2000]) setTimeout(() => window.dispatchEvent(new MessageEvent('message', { data: { jsonrpc: '2.0', method: 'ui/notifications/tool-input', params: input }, source: window.parent })), ms)
+    })
+  }
+  async function swap() {
+    // 起動した直後に本体と分かったときは、tool-input がまだ届いていないことがある。少しだけ待つ（届かなければそのまま進む）。
+    for (let i = 0; !toolInput && i < 10; i++) await new Promise((ok) => setTimeout(ok, 100))
+    $('prog').hidden = false
+    $('ptext').textContent = '本物の画面に切り替えています…'
+    const r = await rpc('resources/read', { uri: PANEL })
+    const html = r && r.contents && r.contents[0] && r.contents[0].text
+    if (typeof html !== 'string' || html.includes('name="notedock-setup"')) throw new Error('まだ切り替えられません')
+    const inject = '<script>(' + handover.toString() + ')(' + JSON.stringify(toolInput).replace(/</g, '\\x3c') + ')<\/script>'
+    const head = /<head[^>]*>/i
+    const page = head.test(html) ? html.replace(head, (m) => m + inject) : inject + html
+    document.open(); document.write(page); document.close()
+  }
+  let polling = false
+  async function poll() {
+    if (polling) return
+    polling = true
+    let misses = 0
+    try {
+      for (;;) {
+        let r
+        try { r = await api('GET', '/api/launcher/status'); misses = 0 } catch (e) {
+          if (++misses >= 5) throw e // 一時的なエラーでは止めない
+          await new Promise((ok) => setTimeout(ok, 1000)); continue
+        }
+        const s = r.data || {}
+        // 起動用のプログラムの答えでない（本体に入れ替わった。本体は 404 か、つなぎによっては 403 を返す）
+        if (!s.state) return await swap()
+        show(s)
+        if (s.state === 'ready') return await swap()
+        if (s.state !== 'downloading') return
+        await new Promise((ok) => setTimeout(ok, 1000))
+      }
+    } catch (e) {
+      $('msg').hidden = false
+      $('msg').textContent = '切り替えに失敗しました。このタブを閉じて、もう一度 Visual Editor で開いてください。（' + e.message + '）'
+    } finally { polling = false }
+  }
+  $('go').addEventListener('click', async () => {
+    $('go').disabled = true
+    try {
+      const r = await api('POST', '/api/launcher/start')
+      if (r.data && r.data.state) show(r.data)
+      else if (r.status === 403) {
+        $('go').disabled = false
+        $('msg').hidden = false
+        $('msg').textContent = 'このつなぎからはサーバーを取ってこられません。Codex アプリのファイルのタブから開き直してください。'
+        return
+      }
+    } catch (e) {
+      $('go').disabled = false
+      $('msg').hidden = false
+      $('msg').textContent = 'ボタンの依頼が届きませんでした。もう一度押してください。（' + e.message + '）'
+      return
+    }
+    poll() // 本体に入れ替わっていれば、poll が入れ替える
+  })
+  rpc('ui/initialize', { appInfo: { name: 'NoteDock setup', version: '0' }, appCapabilities: {}, protocolVersion: '2026-01-26' }).then((res) => {
+    applyTheme(res && res.hostContext)
+    post({ method: 'ui/notifications/initialized', params: {} })
+    poll() // ほかのタブで取ってきている途中なら、その進み具合を出す
+  })
+})()
+</script>
+</body>
+</html>

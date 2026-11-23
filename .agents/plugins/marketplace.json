@@ -1,0 +1,20 @@
+{
+  "name": "notedock",
+  "interface": {
+    "displayName": "NoteDock"
+  },
+  "plugins": [
+    {
+      "name": "notedock",
+      "source": {
+        "source": "local",
+        "path": "./plugins/notedock"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

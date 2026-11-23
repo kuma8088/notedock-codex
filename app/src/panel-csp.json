@@ -1,0 +1,4 @@
+{
+  "comment": "パネルの画面に入れる通信の制限（Content-Security-Policy）。build.mjs が dist/panel.html に入れ、test/browser/mermaid-link-check.py も同じものを使う。画像はフォルダーの中のものを data: にして表示するので data: だけ。スクリプトと見た目はページの中に書いてあるので 'unsafe-inline'。外への読み込みと接続は何も許さない。スクリプトの差し込みは、この制限では止めない（DOMPurify で止めている）。",
+  "policy": "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'"
+}

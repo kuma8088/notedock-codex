@@ -1,0 +1,1030 @@
+@import 'katex/dist/katex.min.css';
+
+:root {
+  color-scheme: light dark;
+  /* 本文の見た目の基準（Obsidian 1.9.12 の app.css に合わせた値）。
+     --note-leading: 本文の行間（Obsidian の --line-height-normal 1.5。日本語の目安 1.5〜2.0 の下限。1.7 と比べて本人が選ぶ）
+     --note-width: 本文の最大幅（--file-line-width 700px）
+     --note-margin: 枠から本文の左端までの余白（--file-margins 32px） */
+  --note-leading: 1.5;
+  --note-width: 700px;
+  --note-margin: 32px;
+  --bg: #fbfbfa;
+  --surface: #ffffff;
+  --text: #24262a;
+  --muted: #7a7f87;
+  --line: #e2e3e0;
+  --accent: #5d55c9;
+  --link: #3f5fbf;
+  --link-missing: #b5704a;
+  --code-bg: #f1f1ee;
+  --quote: #c6c7c3;
+  --hover: #efeff0;
+  --code-keyword: #8a3fa8;
+  --code-string: #2f7d4f;
+  --code-number: #a4631c;
+  --code-function: #2b64b5;
+  --code-type: #1f7f8c;
+  --warn-bg: #fff3d6;
+  --warn-text: #5b4300;
+  --note: #2f6fd6;
+  --tip: #2a8a4a;
+  --important: #7c4fd0;
+  --warning: #b77a0a;
+  --caution: #c8413b;
+  --body: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --ui: -apple-system, 'Hiragino Sans', sans-serif;
+  --mono: 'Hiragino Sans', ui-monospace, Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1e21;
+    --surface: #25262a;
+    --text: #dcdde0;
+    --muted: #92969e;
+    --line: #36383d;
+    --accent: #a79ff0;
+    --link: #8ea8ef;
+    --link-missing: #d99b77;
+    --code-bg: #2a2c31;
+    --quote: #4b4e55;
+    --hover: #2f3136;
+    --code-keyword: #c792ea;
+    --code-string: #93c98f;
+    --code-number: #e0a96d;
+    --code-function: #82aaff;
+    --code-type: #6fc5d0;
+    --warn-bg: #4a3a12;
+    --warn-text: #f4e2b0;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--ui);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+#bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+  min-height: 38px;
+  flex-wrap: wrap;
+}
+
+#bar button,
+#banner button,
+dialog button {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 6px;
+  padding: 3px 9px;
+  cursor: pointer;
+}
+
+/* :where で詳しさを上げない。押されている表示切り替えの色を消さないため。 */
+#bar button:hover:where(:not(:disabled)),
+#banner button:hover {
+  background: var(--hover);
+}
+
+#note-path {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: 0;
+  max-width: 45%;
+}
+
+/* パンくずリスト。途中のフォルダーは縮めて、ノートの名前を残す。 */
+#note-path .crumb {
+  border: 0;
+  background: transparent;
+  padding: 1px 3px;
+  border-radius: 4px;
+  color: var(--muted);
+  font: inherit;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 0 1 auto;
+}
+
+#note-path .crumb:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+#note-path .crumb-sep {
+  color: var(--muted);
+  flex: none;
+}
+
+#note-path .crumb-note {
+  font-weight: 600;
+  flex: 0 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.files-row { position: relative; }
+.files-more {
+  margin-left: auto;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--muted);
+  visibility: hidden;
+}
+.files-row:hover .files-more,
+.files-row:focus-visible .files-more { visibility: visible; }
+.files-more:hover { background: var(--line); color: var(--text); }
+.files-drop { background: var(--hover); outline: 2px dashed var(--accent); outline-offset: -2px; }
+#files.files-drop { outline-offset: -4px; }
+.dialog-details { margin: 0 0 8px; padding-left: 18px; color: var(--muted); font-size: 12px; word-break: break-all; }
+
+.files-flash {
+  background: var(--hover);
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* 空いている幅を使って右のボタンを寄せる。短い知らせで帯が折り返してボタンが動かないよう、その幅に収めて切る。 */
+/* 「AI」のボタンもこの欄の中に置く。ふだんは欄の幅の決め方（flex: 1 1 0 と min-width: 7em）を変えないので、
+   ボタンを入れても帯の段の数は前と同じ（ボタンの分は、保存の状態の文字が縮む）。
+   「⚠」の知らせがあるあいだだけは、下の #status[data-alert] で欄が中身の幅を取る（知らせを切らない）。 */
+#status {
+  color: var(--muted);
+  white-space: nowrap;
+  flex: 1 1 0;
+  /* 狭くても「保存済み」などが消えないだけの幅は残す。足りなければ帯は折り返す。 */
+  min-width: 7em;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#status #ai-share-on { flex: none; padding: 1px 6px; }
+/* 会話に内容が残っているかもしれない知らせ。先頭に短く、警告の色で出す（全文は title）。縮ませない。 */
+#status-alert { flex: none; color: var(--warning); font-weight: 600; }
+/* 縮めるのは保存の状態の文字のほう。 */
+#status-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* 知らせがあるあいだは、欄がボタンと知らせの幅を必ず取る（足りなければ帯の段が増えるのは許す。知らせは珍しいため）。
+   保存の状態の文字は、そのあいだ縮んで隠れてもよい。 */
+#status[data-alert] { flex: 1 0 auto; min-width: max-content; }
+#status[data-alert] #status-text { flex: 1 1 0; }
+#status[data-state='conflict'],
+#status[data-state='offline'],
+#status[data-state='failed'],
+#status[data-state='removed'] {
+  color: var(--caution);
+  font-weight: 600;
+}
+
+#modes {
+  display: inline-flex;
+}
+
+#modes button {
+  border-radius: 0;
+  margin-left: -1px;
+}
+
+#modes button:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+#modes button:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+#modes button[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+#toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 10px;
+  padding: 4px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+}
+
+#toolbar[hidden] {
+  display: none;
+}
+
+.tool-group {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.tool-group + .tool-group {
+  border-left: 1px solid var(--line);
+  padding-left: 10px;
+}
+
+#toolbar button {
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 5px;
+  padding: 3px 7px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#toolbar button:hover {
+  background: var(--hover);
+}
+
+#toolbar button[aria-pressed='true'] {
+  background: var(--hover);
+  border-color: var(--line);
+  color: var(--accent);
+}
+
+#toolbar button[aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.tool-bold { font-weight: 700; }
+.tool-italic { font-style: italic; }
+.tool-strike { text-decoration: line-through; }
+
+#banner {
+  padding: 8px 14px;
+  background: var(--warn-bg);
+  color: var(--warn-text);
+  font-size: 13px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#banner[hidden],
+#outline[hidden] {
+  display: none;
+}
+
+#layout {
+  position: relative;
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+#paste-hint {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 18px;
+  z-index: 15;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 7px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12.5px;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 18%);
+  pointer-events: none;
+}
+
+#paste-hint[hidden] {
+  display: none;
+}
+
+#paste-hint kbd {
+  font-family: var(--mono);
+  font-size: 0.92em;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+/* 本文の上に重ねないと、枠が本文に隠れて見えない。 */
+body.paste-ready #editor::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 14;
+  border: 2px solid var(--accent);
+  pointer-events: none;
+}
+
+#editor {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+/* 右の列。上にカレンダー、その下にファイルの一覧（Claude用の NoteDock と同じ並び）。 */
+#side {
+  container-type: inline-size;
+  width: 260px;
+  flex: none;
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#side[hidden] {
+  display: none;
+}
+
+#files {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px 6px;
+  font-size: 12.5px;
+}
+
+#files[hidden] {
+  display: none;
+}
+
+.files-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  border-radius: 5px;
+  padding: 3px 6px 3px calc(6px + var(--depth, 0) * 12px);
+  cursor: pointer;
+  font: inherit;
+}
+
+.files-row:hover {
+  background: var(--hover);
+}
+
+.files-row[aria-current='true'] {
+  background: var(--hover);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.files-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.files-arrow {
+  flex: none;
+  width: 12px;
+  color: var(--muted);
+}
+
+.files-note {
+  padding-left: calc(22px + var(--depth, 0) * 12px);
+}
+
+#outline {
+  width: 240px;
+  border-left: 1px solid var(--line);
+  overflow: auto;
+  padding: 10px 6px;
+  font-size: 12.5px;
+}
+
+.outline-item {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: none;
+  text-align: left;
+  padding: 3px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.outline-item:hover {
+  background: var(--hover);
+}
+
+.outline-2 { padding-left: 16px; }
+.outline-3 { padding-left: 26px; }
+.outline-4 { padding-left: 36px; }
+.outline-5 { padding-left: 46px; }
+.outline-6 { padding-left: 56px; }
+
+.cm-editor {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: var(--note-leading);
+}
+
+.cm-editor.cm-focused {
+  outline: none;
+}
+
+.cm-scroller {
+  font-family: inherit !important;
+  line-height: inherit !important;
+}
+
+.cm-scroller {
+  padding-inline: max(0px, calc((100% - var(--note-width) - 2 * var(--note-margin)) / 2));
+}
+
+.cm-content {
+  padding: 24px 20px 40vh;
+  caret-color: var(--text);
+}
+
+/* CodeMirror の初期の見た目（.ͼ1 .cm-content の padding: 4px 0）のほうが上の指定より強く、
+   本文の上と左右の余白が効いていなかった。クラスを重ねて、上と左右だけ効かせる（下は今の見た目のまま）。
+   左右は、行の左の余白 6px（折り返しの字下げの基準）と合わせて --note-margin になる値。上は --note-margin と同じ。 */
+.cm-editor .cm-scroller .cm-content {
+  padding-top: var(--note-margin);
+  padding-inline: calc(var(--note-margin) - 6px);
+}
+
+.cm-cursor {
+  border-left-color: var(--text) !important;
+}
+
+.cm-selectionBackground {
+  background: color-mix(in srgb, var(--accent) 22%, transparent) !important;
+}
+
+.cm-gutters {
+  background: transparent !important;
+  border: 0 !important;
+  color: var(--muted) !important;
+}
+
+.cm-foldGutter .cm-gutterElement {
+  cursor: pointer;
+  opacity: 0;
+  padding: 0 4px;
+  font-family: var(--ui);
+  transition: opacity 0.1s;
+}
+
+.cm-gutters:hover .cm-foldGutter .cm-gutterElement {
+  opacity: 0.8;
+}
+
+.cm-foldPlaceholder {
+  background: var(--code-bg);
+  border: 0;
+  color: var(--muted);
+  padding: 0 6px;
+}
+
+body[data-mode='source'] .cm-editor {
+  font-family: var(--mono);
+  font-size: 13.5px;
+}
+
+/* 「開いているノートをAIに伝える」のスイッチと、伝えられないときの小さな知らせ。 */
+/* 「開いているノートをAIに伝える」の小さなボタン。オンは色付き。知らせがあるときは右上に小さな印（中身は title）。 */
+#bar #ai-share-on { position: relative; font-weight: 600; letter-spacing: 0.02em; color: var(--muted); }
+#bar #ai-share-on[aria-pressed='true'] { color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+#bar #ai-share-on[data-note]::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warning);
+}
+
+/* 見出し（Obsidian 1.9.12 の --h1-size〜--h6-size、--h1-weight〜、--h1-line-height〜）。
+   色は本文と同じ（--h1-color〜--h6-color はどれも inherit）。字間は h1〜h3 が -0.015em（app.css の h1, h2, h3 の letter-spacing）。 */
+.cm-heading { color: inherit; font-weight: 600; }
+.cm-h1 { font-size: 1.802em; line-height: 1.2; font-weight: 700; letter-spacing: -0.015em; }
+.cm-h2 { font-size: 1.602em; line-height: 1.2; letter-spacing: -0.015em; }
+.cm-h3 { font-size: 1.424em; line-height: 1.3; letter-spacing: -0.015em; }
+.cm-h4 { font-size: 1.266em; line-height: 1.4; }
+.cm-h5 { font-size: 1.125em; line-height: 1.5; }
+.cm-h6 { font-size: 1em; line-height: 1.5; }
+/* 見出しの上の余白は 16px（Obsidian の見出しの margin-block-start: var(--p-spacing)。--p-spacing は 1rem）、下は 0。
+   CodeMirror の行の余白（.ͼ1 .cm-line の padding: 0 2px 0 6px）に消されないよう、クラスを重ねる。 */
+.cm-editor .cm-line.cm-heading { padding-top: 16px; padding-bottom: 0; }
+/* 閲覧の表示では、段落・コード・表・箇条書きのすぐあとの見出しだけ 40px（Obsidian の --heading-spacing。--p-spacing の 2.5 倍）。 */
+body[data-mode='reading'] .cm-editor .cm-line.cm-heading.cm-heading-spaced { padding-top: 40px; }
+/* ノートの最初の行の見出し（frontmatter の後、空行は飛ばす）は、上の余白を付けない。本文の上の余白（--note-margin）だけにする。
+   Obsidian の閲覧の表示でも、先頭の要素の上の余白は 0。 */
+.cm-editor .cm-line.cm-heading.cm-heading-first { padding-top: 0; }
+
+.cm-strong { font-weight: 700; }
+.cm-em { font-style: italic; }
+.cm-strike { text-decoration: line-through; }
+.cm-mark,
+.cm-url { color: var(--muted); }
+.cm-inline-code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--code-bg);
+  border-radius: 4px;
+  padding: 1px 4px;
+}
+
+.cm-link,
+a.cm-link {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.cm-link-missing,
+a.cm-link-missing {
+  color: var(--link-missing);
+  text-decoration-style: dashed;
+}
+
+.cm-quote {
+  border-left: 3px solid var(--quote);
+  padding-left: 14px !important;
+  color: var(--muted);
+}
+
+.cm-bullet { color: var(--muted); display: inline-block; width: 1ch; }
+
+/* 長い項目の2行目以降を、記号のあとの本文にそろえる（幅は src/list-indent.mjs が測って --hang に入れる）。
+   --hang-base は、ふだんの行の左の余白（CodeMirror の初期値 6px。引用は 14px、コールアウトは 21px）。1行目だけ、同じ幅を戻す。 */
+.cm-editor .cm-line.cm-hang {
+  padding-left: calc(var(--hang-base, 6px) + var(--hang)) !important;
+  text-indent: calc(-1 * var(--hang));
+}
+.cm-editor .cm-line.cm-hang.cm-quote { --hang-base: 14px; }
+.cm-editor .cm-line.cm-hang.cm-callout { --hang-base: 21px; }
+/* 行の中の記号・チェック欄・数式などは、1行目の字下げを引き継がない。 */
+.cm-editor .cm-line.cm-hang * { text-indent: 0; }
+/* 記号の前の字下げ（タブ・空白）。囲みの中のタブは囲みの左端から数えるので、行の余白を変えても幅が変わらない。 */
+.cm-list-indent { display: inline-block; white-space: pre; }
+/* 入れ子の縦の線を、折り返した2行目以降まで伸ばす。線の引き方は .cm-indent-guide と同じで、幅は字下げの分（--indent）だけ。 */
+.cm-editor .cm-line.cm-hang-guide { position: relative; }
+.cm-editor .cm-line.cm-hang-guide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--hang-base, 6px);
+  width: var(--indent);
+  background-image: linear-gradient(to right, var(--guide) 1px, transparent 1px);
+  background-size: var(--tab-width, 4ch) 100%;
+  pointer-events: none;
+}
+/* 箇条書きの行の上下に 0.075em ずつ（Obsidian の --list-spacing 0.075em）。 */
+.cm-editor .cm-line.cm-list-line { padding-top: 0.075em; padding-bottom: 0.075em; }
+.cm-list-number { color: var(--muted); }
+
+/* 入れ子の縦の線。幅 1px、薄い色（Obsidian は文字の色の 12%）。間隔はタブ1つ分の幅（src/list-indent.mjs が測って --tab-width に入れる）。 */
+.cm-editor { --guide: color-mix(in srgb, var(--text) 12%, transparent); }
+.cm-indent-guide {
+  background-image: linear-gradient(to right, var(--guide) 1px, transparent 1px);
+  background-size: var(--tab-width, 4ch) 100%;
+}
+
+.cm-task-box {
+  margin: 0 0.35em 0 0;
+  vertical-align: -1px;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+.cm-task-done { color: var(--muted); text-decoration: line-through; }
+
+.cm-hr {
+  position: relative;
+}
+
+.cm-hr::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 50%;
+  border-top: 1px solid var(--line);
+}
+
+/* コードのかたまりの枠の左端を、本文の左端（行の左の余白 6px の先）にそろえる。右端も本文の右端（2px）に合わせる。
+   中の文字は枠から 16px（Obsidian の .HyperMD-codeblock の padding-inline-start: var(--size-4-4)）。 */
+.cm-codeblock {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--code-bg);
+  margin-left: 6px;
+  margin-right: 2px;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+.cm-codeblock-first { border-radius: 6px 6px 0 0; }
+.cm-codeblock-last { border-radius: 0 0 6px 6px; }
+
+.cm-comment,
+.cm-comment-line,
+.cm-html-block { color: var(--muted); font-family: var(--mono); font-size: 0.9em; }
+.cm-frontmatter-line,
+.cm-table-source { font-family: var(--mono); font-size: 13px; }
+.cm-html-u { text-decoration: underline; }
+.cm-html-kbd { font-family: var(--mono); font-size: 0.85em; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+.cm-html-sub { vertical-align: sub; font-size: 0.8em; }
+.cm-html-sup { vertical-align: super; font-size: 0.8em; }
+.cm-html-mark { background: color-mix(in srgb, #f7d34a 45%, transparent); }
+
+/* コールアウトの枠の左端を、本文の左端にそろえる（コードのかたまりと同じ）。
+   中の文字は枠の左から 24px、右から 12px（Obsidian の --callout-padding: 12px 12px 12px 24px）。左の線 3px は中の 24px に含める。 */
+.cm-callout {
+  --callout: var(--note);
+  border-left: 3px solid var(--callout);
+  background: color-mix(in srgb, var(--callout) 9%, transparent);
+  margin-left: 6px;
+  margin-right: 2px;
+  padding-left: 21px !important;
+  padding-right: 12px !important;
+}
+
+.cm-callout-note { --callout: var(--note); }
+.cm-callout-tip { --callout: var(--tip); }
+.cm-callout-important { --callout: var(--important); }
+.cm-callout-warning { --callout: var(--warning); }
+.cm-callout-caution { --callout: var(--caution); }
+.cm-callout-first { border-radius: 0 6px 0 0; padding-top: 6px !important; }
+.cm-callout-last { border-radius: 0 0 6px 0; padding-bottom: 6px !important; }
+.cm-callout-title { color: var(--callout); font-weight: 700; font-family: var(--ui); font-size: 0.92em; }
+
+.cm-image { max-width: 100%; height: auto; display: inline-block; vertical-align: bottom; border-radius: 4px; }
+.cm-image-missing { color: var(--muted); font-size: 0.9em; border: 1px dashed var(--line); border-radius: 4px; padding: 2px 6px; }
+.cm-math-block { text-align: center; padding: 8px 0; overflow-x: auto; }
+.cm-mermaid { padding: 10px 0; text-align: center; font-family: var(--ui); font-size: 13px; color: var(--muted); }
+.cm-mermaid svg { max-width: 100%; height: auto; }
+.cm-mermaid-error { text-align: left; white-space: pre-wrap; color: var(--caution); }
+
+/* 表の枠の左端を、本文の文字の端にそろえる（表は行の外に置かれるので、行の左の余白 6px と右の 2px を外側に取る）。 */
+.cm-table-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) 22px;
+  grid-template-rows: auto 22px;
+  padding: 4px 0 2px;
+  margin: 0 2px 0 6px;
+}
+/* 読むだけのときは「＋」のボタンがないので、その列と行の場所を取らない（表のあとが空きすぎないように）。 */
+.cm-table-wrap.cm-table-locked {
+  grid-template-columns: minmax(0, max-content);
+  grid-template-rows: auto;
+}
+.cm-table-scroll { overflow-x: auto; min-width: 0; }
+.cm-table-add {
+  border: 1px dashed var(--line);
+  background: transparent;
+  color: var(--muted);
+  border-radius: 4px;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+.cm-table-wrap:hover .cm-table-add,
+.cm-table-wrap:focus-within .cm-table-add { opacity: 1; }
+.cm-table-add:hover { background: var(--hover); color: var(--accent); border-color: var(--accent); }
+.cm-table-add-col { grid-column: 2; grid-row: 1; margin-left: 4px; }
+.cm-table-add-row { grid-column: 1; grid-row: 2; margin-top: 4px; }
+.cm-table { border-collapse: collapse; font-size: 0.94em; line-height: 1.55; }
+.cm-table th,
+.cm-table td { border: 1px solid var(--line); padding: 5px 10px; vertical-align: top; min-width: 40px; }
+.cm-table th { background: var(--code-bg); font-weight: 700; }
+.cm-table code { font-family: var(--mono); font-size: 0.88em; background: var(--code-bg); border-radius: 4px; padding: 1px 4px; }
+.cm-cell-editing { outline: 2px solid var(--accent); outline-offset: -2px; font-family: var(--mono); font-size: 0.92em; white-space: pre-wrap; }
+
+.cm-props { font-family: var(--ui); font-size: 12.5px; padding: 2px 0 10px; color: var(--muted); }
+.cm-props-head,
+.cm-props-add,
+.cm-props-source,
+.cm-props-del { border: 0; background: none; cursor: pointer; color: var(--muted); padding: 2px 4px; border-radius: 4px; }
+.cm-props-head:hover,
+.cm-props-add:hover,
+.cm-props-source:hover,
+.cm-props-del:hover { background: var(--hover); }
+.cm-props-row { display: grid; grid-template-columns: 150px minmax(0, 1fr) 24px; gap: 6px; align-items: center; padding: 2px 4px; }
+.cm-props-key,
+.cm-props-value { border: 1px solid transparent; background: transparent; border-radius: 4px; padding: 2px 6px; min-width: 0; color: var(--text); }
+.cm-props-key { color: var(--muted); }
+.cm-props-key:hover,
+.cm-props-value:hover { border-color: var(--line); }
+.cm-props-key:focus,
+.cm-props-value:focus { border-color: var(--accent); outline: none; background: var(--surface); }
+input[type='checkbox'].cm-props-value { justify-self: start; accent-color: var(--accent); }
+.cm-props-note { margin: 4px; }
+
+.cm-panels { background: var(--surface) !important; color: var(--text) !important; border-color: var(--line) !important; font-family: var(--ui); font-size: 12.5px; }
+.cm-panel.cm-search input,
+.cm-panel.cm-search button { font-size: 12.5px; }
+.cm-textfield { background: var(--bg); border: 1px solid var(--line); border-radius: 4px; }
+.cm-button { background: var(--surface) !important; border: 1px solid var(--line) !important; border-radius: 4px !important; }
+.cm-searchMatch { background: color-mix(in srgb, #f7d34a 40%, transparent); }
+.cm-searchMatch-selected { background: color-mix(in srgb, #f7a44a 60%, transparent); }
+
+.cm-tooltip { background: var(--surface) !important; border: 1px solid var(--line) !important; border-radius: 6px; color: var(--text); }
+.cm-tooltip-autocomplete ul { font-family: var(--ui) !important; font-size: 13px; max-width: 480px; }
+.cm-tooltip-autocomplete li[aria-selected] { background: var(--accent) !important; color: #fff !important; }
+.cm-completionDetail { color: var(--muted); font-size: 0.85em; margin-left: 8px; font-style: normal !important; }
+.note-hover { width: 460px; max-height: 320px; overflow: auto; }
+.note-hover .cm-editor { height: auto; font-size: 13px; }
+.note-hover .cm-content,
+.note-hover .cm-editor .cm-scroller .cm-content { padding: 8px 12px; }
+
+.note-menu { position: fixed; z-index: 1000; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 4px; box-shadow: 0 6px 20px rgb(0 0 0 / 22%); font-size: 12.5px; min-width: 180px; }
+.note-menu button { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 4px 8px; border-radius: 4px; cursor: pointer; color: var(--text); }
+.note-menu button:hover { background: var(--hover); }
+.note-menu hr { border: 0; border-top: 1px solid var(--line); margin: 4px 0; }
+
+dialog { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--text); padding: 0; }
+dialog::backdrop { background: rgb(0 0 0 / 30%); }
+#switcher { width: min(620px, calc(100vw - 32px)); margin-top: 8vh; }
+.switcher-missing { padding: 8px 14px; color: var(--muted); font-size: 13px; }
+#switcher-input { width: 100%; border: 0; border-bottom: 1px solid var(--line); background: transparent; padding: 12px 14px; font-size: 15px; outline: none; }
+#switcher-list { list-style: none; margin: 0; padding: 4px; max-height: 60vh; overflow: auto; }
+#switcher-list li { display: flex; flex-direction: column; padding: 6px 10px; border-radius: 6px; cursor: pointer; }
+#switcher-list li[aria-selected='true'],
+#switcher-list li:hover { background: var(--hover); }
+.switcher-name { font-size: 14px; }
+.switcher-folder { font-size: 11.5px; color: var(--muted); }
+#compare { width: min(1100px, calc(100vw - 32px)); padding: 12px; }
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.compare-grid h2 { font-size: 13px; margin: 0 0 6px; }
+.compare-grid pre { margin: 0; height: 60vh; overflow: auto; background: var(--code-bg); padding: 8px; font-family: var(--mono); font-size: 12px; white-space: pre-wrap; }
+#compare form { margin-top: 10px; text-align: right; }
+
+@media (max-width: 640px) {
+  #note-path { max-width: none; order: 3; flex: 1 1 calc(100% - 120px); }
+  #copy-path { order: 3; }
+  #outline { display: none; }
+  /* 狭くても本文の上に重ねず、横に並べたままにする。ノートを開いても閉じない。 */
+  #side { width: clamp(150px, 36vw, 220px); }
+  .cm-props-row { grid-template-columns: 90px minmax(0, 1fr) 24px; }
+}
+
+#history { width: min(960px, calc(100vw - 32px)); padding: 12px; }
+.history-grid { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 10px; }
+#history-list { list-style: none; margin: 0; padding: 0; height: 60vh; overflow: auto; font-size: 12.5px; }
+#history-list li { padding: 6px 8px; border-radius: 6px; cursor: pointer; }
+#history-list li:hover,
+#history-list li[aria-selected='true'] { background: var(--hover); }
+#history-text { margin: 0; height: 60vh; overflow: auto; background: var(--code-bg); padding: 8px; font-family: var(--mono); font-size: 12px; white-space: pre-wrap; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+
+.note-ask { padding: 16px; width: min(420px, calc(100vw - 32px)); font-size: 14px; }
+.note-ask p { margin: 0 0 10px; }
+.note-ask input { width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); }
+.note-ask .dialog-title { font-weight: 600; }
+.note-ask label { display: block; margin: 0 0 10px; }
+.note-ask label input, .note-ask label select { display: block; margin-top: 4px; }
+.note-ask select { width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: inherit; font: inherit; }
+.note-ask .dialog-error { color: #c0392b; }
+.note-ask.note-ask-wide { width: min(520px, calc(100vw - 32px)); margin-top: 8vh; margin-bottom: auto; }
+/* フォルダーを移っても画面の高さが変わらないようにして、ボタンが動かないようにする。 */
+.place-list { min-height: 120px; }
+.note-ask .place-title { margin: 4px 0 4px; }
+.place-picker { border: 1px solid var(--line); border-radius: 8px; padding: 8px; margin-bottom: 8px; }
+.place-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; margin-bottom: 6px; }
+.place-crumb, .place-chip, .place-row { border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; border-radius: 4px; }
+.place-crumb { padding: 1px 4px; font-weight: 600; }
+.place-crumb:last-child { color: var(--accent); }
+.place-crumb:hover, .place-chip:hover, .place-row:hover { background: var(--hover); }
+.place-sep { color: var(--muted); }
+.note-ask .place-search { margin-bottom: 6px; }
+.place-recent { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 6px; font-size: 12px; }
+.place-recent[hidden] { display: none; }
+.place-recent-label { color: var(--muted); }
+.place-chip { border: 1px solid var(--line); padding: 1px 6px; }
+.place-list { list-style: none; margin: 0; padding: 0; max-height: 180px; overflow: auto; }
+.place-row { display: block; width: 100%; text-align: left; padding: 4px 6px; }
+.place-empty { color: var(--muted); padding: 4px 6px; }
+.note-ask .dialog-target { color: var(--muted); font-size: 12px; word-break: break-all; }
+.note-ask .primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+/* 設定の画面。項目ごとに、名前・今の値・ボタンを縦に並べる。 */
+/* 背の低いパネルでも「保存」が見えるよう、画面の中だけをスクロールさせる。 */
+.note-ask.settings-ask { max-height: calc(92vh - 16px); overflow-y: auto; }
+.note-ask .dialog-note { color: var(--muted); font-size: 12.5px; }
+.note-ask .dialog-error[hidden] { display: none; }
+.settings-row, .settings-templates { border-top: 1px solid var(--line); padding: 10px 0 4px; }
+.settings-templates[hidden] { display: none; }
+.note-ask .settings-label { font-weight: 600; margin-bottom: 4px; }
+.note-ask .settings-value { word-break: break-all; margin-bottom: 6px; }
+.settings-buttons { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.note-ask .settings-template { font-size: 12.5px; margin-bottom: 6px; }
+/* 日付ごとのノートの置き場が決まっていないとき、カレンダーの代わりに出す案内。 */
+.cal-off { margin: 0 0 6px; color: var(--muted); line-height: 1.5; }
+#calendar .cal-off-open { border: 1px solid var(--line); }
+
+/* Obsidianのハイライトとタグ。コメントの色は上の .cm-comment */
+.cm-highlight { background: color-mix(in srgb, #f5d000 38%, transparent); border-radius: 2px; }
+.cm-highlight-red { background: color-mix(in srgb, #e5484d 35%, transparent); }
+.cm-highlight-orange { background: color-mix(in srgb, #f76b15 35%, transparent); }
+.cm-highlight-yellow { background: color-mix(in srgb, #f5d000 38%, transparent); }
+.cm-highlight-green { background: color-mix(in srgb, #30a46c 35%, transparent); }
+.cm-highlight-blue { background: color-mix(in srgb, #0090ff 32%, transparent); }
+.cm-highlight-purple { background: color-mix(in srgb, #8e4ec6 35%, transparent); }
+.cm-tag {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border-radius: 999px;
+  padding: 0 6px;
+}
+
+#calendar[hidden] {
+  display: none;
+}
+
+/* カレンダー。文字はファイルの一覧と同じ大きさにそろえる。見た目はObsidianのカレンダーを参考にした。 */
+#calendar {
+  flex: none;
+  padding: 10px 8px 8px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+}
+
+.cal-head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+/* 月のノートへのリンク。押せることがわかるよう、触れたら下線を出す。 */
+#calendar .cal-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+#calendar .cal-title:hover {
+  text-decoration: underline;
+}
+
+#calendar button {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  border-radius: 6px;
+  padding: 3px 6px;
+  cursor: pointer;
+  position: relative;
+}
+
+#calendar button:hover {
+  background: var(--code-bg);
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: 2em repeat(7, minmax(0, 1fr));
+  gap: 2px;
+  text-align: center;
+}
+
+/* 曜日と週番号は、日付より小さく薄くして、日付を目立たせる。 */
+.cal-dow {
+  color: var(--muted);
+  font-size: 0.72em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding-bottom: 4px;
+}
+
+#calendar .cal-week {
+  color: var(--muted);
+  font-size: 0.75em;
+  padding: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+}
+
+/* 日付は、下に印を置く分の余白をとる。 */
+#calendar .cal-grid > button:not(.cal-week) {
+  padding: 4px 0 9px;
+}
+
+#calendar .cal-out {
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+#calendar .cal-today {
+  background: var(--accent);
+  color: #fff;
+}
+
+#calendar .cal-open {
+  outline: 1px solid var(--accent);
+}
+
+/* ノートがある印。数字の下に、はっきりした丸を置く。今日の上では白にする。 */
+#calendar .cal-has::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+#calendar .cal-today.cal-has::after {
+  background: #fff;
+}
+
+#calendar .cal-week.cal-has::after {
+  bottom: -1px;
+}
+
+/* 月の見出しは左寄せなので、印は文字のすぐ右に置く。下に置くと曜日の上に乗って見える。 */
+#calendar .cal-title.cal-has::after {
+  position: static;
+  display: inline-block;
+  margin: 0 0 0 6px;
+  vertical-align: middle;
+}
+
+.cal-dow-short {
+  display: none;
+}
+
+/* 右の列が狭いとき（狭い画面では150〜220px）。曜日を1文字にし、文字と余白を小さくして、はみ出さないようにする。 */
+@container (max-width: 210px) {
+  #calendar {
+    padding: 8px 4px 6px;
+    font-size: 11px;
+  }
+  .cal-grid {
+    grid-template-columns: 1.6em repeat(7, minmax(0, 1fr));
+    gap: 1px;
+  }
+  .cal-dow-long {
+    display: none;
+  }
+  .cal-dow-short {
+    display: inline;
+  }
+  #calendar .cal-head button {
+    padding: 2px 3px;
+  }
+}

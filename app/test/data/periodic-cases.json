@@ -1,0 +1,928 @@
+{
+ "root": "Periodic",
+ "paths": [
+  {
+   "period": "daily",
+   "date": "2026-11-08",
+   "path": "Periodic/2026/Daily/2026-11-08.md",
+   "start": "2026-11-08",
+   "parents": [
+    "2026-W45",
+    "2026-11",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2026-11-08",
+   "path": "Periodic/2026/Weekly/2026-W45.md",
+   "start": "2026-11-02",
+   "parents": [
+    "2026-11",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2026-11-08",
+   "path": "Periodic/2026/Monthly/2026-11.md",
+   "start": "2026-11-01",
+   "parents": [
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-11-08",
+   "path": "Periodic/2026/Quarterly/2026-Q4.md",
+   "start": "2026-10-01",
+   "parents": [
+    "2026"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2026-11-08",
+   "path": "Periodic/2026/2026.md",
+   "start": "2026-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2026-12-28",
+   "path": "Periodic/2026/Daily/2026-12-28.md",
+   "start": "2026-12-28",
+   "parents": [
+    "2026-W53",
+    "2026-12",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2026-12-28",
+   "path": "Periodic/2026/Weekly/2026-W53.md",
+   "start": "2026-12-28",
+   "parents": [
+    "2026-12",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2026-12-28",
+   "path": "Periodic/2026/Monthly/2026-12.md",
+   "start": "2026-12-01",
+   "parents": [
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-12-28",
+   "path": "Periodic/2026/Quarterly/2026-Q4.md",
+   "start": "2026-10-01",
+   "parents": [
+    "2026"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2026-12-28",
+   "path": "Periodic/2026/2026.md",
+   "start": "2026-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2026-12-31",
+   "path": "Periodic/2026/Daily/2026-12-31.md",
+   "start": "2026-12-31",
+   "parents": [
+    "2026-W53",
+    "2026-12",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2026-12-31",
+   "path": "Periodic/2026/Weekly/2026-W53.md",
+   "start": "2026-12-28",
+   "parents": [
+    "2026-12",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2026-12-31",
+   "path": "Periodic/2026/Monthly/2026-12.md",
+   "start": "2026-12-01",
+   "parents": [
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-12-31",
+   "path": "Periodic/2026/Quarterly/2026-Q4.md",
+   "start": "2026-10-01",
+   "parents": [
+    "2026"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2026-12-31",
+   "path": "Periodic/2026/2026.md",
+   "start": "2026-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2027-01-01",
+   "path": "Periodic/2027/Daily/2027-01-01.md",
+   "start": "2027-01-01",
+   "parents": [
+    "2026-W53",
+    "2027-01",
+    "2027-Q1",
+    "2027"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2027-01-01",
+   "path": "Periodic/2026/Weekly/2026-W53.md",
+   "start": "2026-12-28",
+   "parents": [
+    "2026-12",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2027-01-01",
+   "path": "Periodic/2027/Monthly/2027-01.md",
+   "start": "2027-01-01",
+   "parents": [
+    "2027-Q1",
+    "2027"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2027-01-01",
+   "path": "Periodic/2027/Quarterly/2027-Q1.md",
+   "start": "2027-01-01",
+   "parents": [
+    "2027"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2027-01-01",
+   "path": "Periodic/2027/2027.md",
+   "start": "2027-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2027-01-03",
+   "path": "Periodic/2027/Daily/2027-01-03.md",
+   "start": "2027-01-03",
+   "parents": [
+    "2026-W53",
+    "2027-01",
+    "2027-Q1",
+    "2027"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2027-01-03",
+   "path": "Periodic/2026/Weekly/2026-W53.md",
+   "start": "2026-12-28",
+   "parents": [
+    "2026-12",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2027-01-03",
+   "path": "Periodic/2027/Monthly/2027-01.md",
+   "start": "2027-01-01",
+   "parents": [
+    "2027-Q1",
+    "2027"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2027-01-03",
+   "path": "Periodic/2027/Quarterly/2027-Q1.md",
+   "start": "2027-01-01",
+   "parents": [
+    "2027"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2027-01-03",
+   "path": "Periodic/2027/2027.md",
+   "start": "2027-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2027-01-04",
+   "path": "Periodic/2027/Daily/2027-01-04.md",
+   "start": "2027-01-04",
+   "parents": [
+    "2027-W01",
+    "2027-01",
+    "2027-Q1",
+    "2027"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2027-01-04",
+   "path": "Periodic/2027/Weekly/2027-W01.md",
+   "start": "2027-01-04",
+   "parents": [
+    "2027-01",
+    "2027-Q1",
+    "2027"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2027-01-04",
+   "path": "Periodic/2027/Monthly/2027-01.md",
+   "start": "2027-01-01",
+   "parents": [
+    "2027-Q1",
+    "2027"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2027-01-04",
+   "path": "Periodic/2027/Quarterly/2027-Q1.md",
+   "start": "2027-01-01",
+   "parents": [
+    "2027"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2027-01-04",
+   "path": "Periodic/2027/2027.md",
+   "start": "2027-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2020-12-31",
+   "path": "Periodic/2020/Daily/2020-12-31.md",
+   "start": "2020-12-31",
+   "parents": [
+    "2020-W53",
+    "2020-12",
+    "2020-Q4",
+    "2020"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2020-12-31",
+   "path": "Periodic/2020/Weekly/2020-W53.md",
+   "start": "2020-12-28",
+   "parents": [
+    "2020-12",
+    "2020-Q4",
+    "2020"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2020-12-31",
+   "path": "Periodic/2020/Monthly/2020-12.md",
+   "start": "2020-12-01",
+   "parents": [
+    "2020-Q4",
+    "2020"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2020-12-31",
+   "path": "Periodic/2020/Quarterly/2020-Q4.md",
+   "start": "2020-10-01",
+   "parents": [
+    "2020"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2020-12-31",
+   "path": "Periodic/2020/2020.md",
+   "start": "2020-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2024-02-29",
+   "path": "Periodic/2024/Daily/2024-02-29.md",
+   "start": "2024-02-29",
+   "parents": [
+    "2024-W09",
+    "2024-02",
+    "2024-Q1",
+    "2024"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2024-02-29",
+   "path": "Periodic/2024/Weekly/2024-W09.md",
+   "start": "2024-02-26",
+   "parents": [
+    "2024-02",
+    "2024-Q1",
+    "2024"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2024-02-29",
+   "path": "Periodic/2024/Monthly/2024-02.md",
+   "start": "2024-02-01",
+   "parents": [
+    "2024-Q1",
+    "2024"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2024-02-29",
+   "path": "Periodic/2024/Quarterly/2024-Q1.md",
+   "start": "2024-01-01",
+   "parents": [
+    "2024"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2024-02-29",
+   "path": "Periodic/2024/2024.md",
+   "start": "2024-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2026-01-01",
+   "path": "Periodic/2026/Daily/2026-01-01.md",
+   "start": "2026-01-01",
+   "parents": [
+    "2026-W01",
+    "2026-01",
+    "2026-Q1",
+    "2026"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2026-01-01",
+   "path": "Periodic/2026/Weekly/2026-W01.md",
+   "start": "2025-12-29",
+   "parents": [
+    "2026-01",
+    "2026-Q1",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2026-01-01",
+   "path": "Periodic/2026/Monthly/2026-01.md",
+   "start": "2026-01-01",
+   "parents": [
+    "2026-Q1",
+    "2026"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-01-01",
+   "path": "Periodic/2026/Quarterly/2026-Q1.md",
+   "start": "2026-01-01",
+   "parents": [
+    "2026"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2026-01-01",
+   "path": "Periodic/2026/2026.md",
+   "start": "2026-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2026-03-31",
+   "path": "Periodic/2026/Daily/2026-03-31.md",
+   "start": "2026-03-31",
+   "parents": [
+    "2026-W14",
+    "2026-03",
+    "2026-Q1",
+    "2026"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2026-03-31",
+   "path": "Periodic/2026/Weekly/2026-W14.md",
+   "start": "2026-03-30",
+   "parents": [
+    "2026-04",
+    "2026-Q2",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2026-03-31",
+   "path": "Periodic/2026/Monthly/2026-03.md",
+   "start": "2026-03-01",
+   "parents": [
+    "2026-Q1",
+    "2026"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-03-31",
+   "path": "Periodic/2026/Quarterly/2026-Q1.md",
+   "start": "2026-01-01",
+   "parents": [
+    "2026"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2026-03-31",
+   "path": "Periodic/2026/2026.md",
+   "start": "2026-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2026-04-01",
+   "path": "Periodic/2026/Daily/2026-04-01.md",
+   "start": "2026-04-01",
+   "parents": [
+    "2026-W14",
+    "2026-04",
+    "2026-Q2",
+    "2026"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2026-04-01",
+   "path": "Periodic/2026/Weekly/2026-W14.md",
+   "start": "2026-03-30",
+   "parents": [
+    "2026-04",
+    "2026-Q2",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2026-04-01",
+   "path": "Periodic/2026/Monthly/2026-04.md",
+   "start": "2026-04-01",
+   "parents": [
+    "2026-Q2",
+    "2026"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-04-01",
+   "path": "Periodic/2026/Quarterly/2026-Q2.md",
+   "start": "2026-04-01",
+   "parents": [
+    "2026"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2026-04-01",
+   "path": "Periodic/2026/2026.md",
+   "start": "2026-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2026-06-30",
+   "path": "Periodic/2026/Daily/2026-06-30.md",
+   "start": "2026-06-30",
+   "parents": [
+    "2026-W27",
+    "2026-06",
+    "2026-Q2",
+    "2026"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2026-06-30",
+   "path": "Periodic/2026/Weekly/2026-W27.md",
+   "start": "2026-06-29",
+   "parents": [
+    "2026-07",
+    "2026-Q3",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2026-06-30",
+   "path": "Periodic/2026/Monthly/2026-06.md",
+   "start": "2026-06-01",
+   "parents": [
+    "2026-Q2",
+    "2026"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-06-30",
+   "path": "Periodic/2026/Quarterly/2026-Q2.md",
+   "start": "2026-04-01",
+   "parents": [
+    "2026"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2026-06-30",
+   "path": "Periodic/2026/2026.md",
+   "start": "2026-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2026-07-01",
+   "path": "Periodic/2026/Daily/2026-07-01.md",
+   "start": "2026-07-01",
+   "parents": [
+    "2026-W27",
+    "2026-07",
+    "2026-Q3",
+    "2026"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2026-07-01",
+   "path": "Periodic/2026/Weekly/2026-W27.md",
+   "start": "2026-06-29",
+   "parents": [
+    "2026-07",
+    "2026-Q3",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2026-07-01",
+   "path": "Periodic/2026/Monthly/2026-07.md",
+   "start": "2026-07-01",
+   "parents": [
+    "2026-Q3",
+    "2026"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-07-01",
+   "path": "Periodic/2026/Quarterly/2026-Q3.md",
+   "start": "2026-07-01",
+   "parents": [
+    "2026"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2026-07-01",
+   "path": "Periodic/2026/2026.md",
+   "start": "2026-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2026-09-30",
+   "path": "Periodic/2026/Daily/2026-09-30.md",
+   "start": "2026-09-30",
+   "parents": [
+    "2026-W40",
+    "2026-09",
+    "2026-Q3",
+    "2026"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2026-09-30",
+   "path": "Periodic/2026/Weekly/2026-W40.md",
+   "start": "2026-09-28",
+   "parents": [
+    "2026-10",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2026-09-30",
+   "path": "Periodic/2026/Monthly/2026-09.md",
+   "start": "2026-09-01",
+   "parents": [
+    "2026-Q3",
+    "2026"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-09-30",
+   "path": "Periodic/2026/Quarterly/2026-Q3.md",
+   "start": "2026-07-01",
+   "parents": [
+    "2026"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2026-09-30",
+   "path": "Periodic/2026/2026.md",
+   "start": "2026-01-01",
+   "parents": []
+  },
+  {
+   "period": "daily",
+   "date": "2026-10-01",
+   "path": "Periodic/2026/Daily/2026-10-01.md",
+   "start": "2026-10-01",
+   "parents": [
+    "2026-W40",
+    "2026-10",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "weekly",
+   "date": "2026-10-01",
+   "path": "Periodic/2026/Weekly/2026-W40.md",
+   "start": "2026-09-28",
+   "parents": [
+    "2026-10",
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "monthly",
+   "date": "2026-10-01",
+   "path": "Periodic/2026/Monthly/2026-10.md",
+   "start": "2026-10-01",
+   "parents": [
+    "2026-Q4",
+    "2026"
+   ]
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-10-01",
+   "path": "Periodic/2026/Quarterly/2026-Q4.md",
+   "start": "2026-10-01",
+   "parents": [
+    "2026"
+   ]
+  },
+  {
+   "period": "yearly",
+   "date": "2026-10-01",
+   "path": "Periodic/2026/2026.md",
+   "start": "2026-01-01",
+   "parents": []
+  }
+ ],
+ "grids": [
+  {
+   "month": "2026-11",
+   "first": "2026-10-26",
+   "last": "2026-12-06",
+   "firstWeek": "2026-W44"
+  },
+  {
+   "month": "2027-01",
+   "first": "2026-12-28",
+   "last": "2027-02-07",
+   "firstWeek": "2026-W53"
+  },
+  {
+   "month": "2026-02",
+   "first": "2026-01-26",
+   "last": "2026-03-08",
+   "firstWeek": "2026-W05"
+  },
+  {
+   "month": "2020-12",
+   "first": "2020-11-30",
+   "last": "2021-01-10",
+   "firstWeek": "2020-W49"
+  }
+ ],
+ "formats": [
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "YYYY-MM-DD-ddd",
+   "expected": "2026-11-08-Sun"
+  },
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "dddd",
+   "expected": "Sunday"
+  },
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "MMM",
+   "expected": "Nov"
+  },
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "MMMM",
+   "expected": "November"
+  },
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "M/D",
+   "expected": "11/8"
+  },
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "YY",
+   "expected": "26"
+  },
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "Q",
+   "expected": "4"
+  },
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "GGGG-[W]WW",
+   "expected": "2026-W45"
+  },
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "[Week] W",
+   "expected": "Week 45"
+  },
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "HH:mm:ss",
+   "expected": "09:05:00"
+  },
+  {
+   "date": "2026-11-08",
+   "time": "09:05",
+   "format": "[Do] A h",
+   "expected": "Do A h"
+  },
+  {
+   "date": "2027-01-01",
+   "time": "09:05",
+   "format": "GGGG-[W]WW",
+   "expected": "2026-W53"
+  },
+  {
+   "date": "2027-01-01",
+   "time": "09:05",
+   "format": "YYYY",
+   "expected": "2027"
+  },
+  {
+   "date": "2026-03-05",
+   "time": "09:05",
+   "format": "MM DD ddd",
+   "expected": "03 05 Thu"
+  },
+  {
+   "date": "2026-03-05",
+   "time": "09:05",
+   "format": "D/M",
+   "expected": "5/3"
+  },
+  {
+   "date": "2026-03-05",
+   "time": "09:05",
+   "format": "W",
+   "expected": "10"
+  },
+  {
+   "date": "2026-03-05",
+   "time": "09:05",
+   "format": "YYYY年M月D日",
+   "expected": "2026年3月5日"
+  }
+ ],
+ "templates": [
+  {
+   "period": "daily",
+   "date": "2026-11-08",
+   "now": "2026-11-08T07:30",
+   "template": "---\ndate: \"[[{{date}}]]\"\n---\n## Morning\n---\n- {{time}}\n",
+   "expected": "---\ndate: \"[[2026-11-08]]\"\n---\n[[2026-W45]] [[2026-11]] [[2026-Q4]] [[2026]]\n\n## Morning\n---\n- 07:30\n"
+  },
+  {
+   "period": "weekly",
+   "date": "2026-01-01",
+   "now": "2026-01-01T10:00",
+   "template": "# {{title}} {{date:YYYY}} {{date:GGGG}} {{unknown}}\n",
+   "expected": "[[2026-01]] [[2026-Q1]] [[2026]]\n\n# 2026-W01 2025 2026 {{unknown}}\n"
+  },
+  {
+   "period": "yearly",
+   "date": "2026-11-08",
+   "now": "2026-11-08T07:30",
+   "template": "",
+   "expected": ""
+  },
+  {
+   "period": "daily",
+   "date": "2026-11-08",
+   "now": "2026-11-08T07:30",
+   "template": "",
+   "expected": "[[2026-W45]] [[2026-11]] [[2026-Q4]] [[2026]]\n\n"
+  },
+  {
+   "period": "weekly",
+   "date": "2026-10-01",
+   "now": "2026-11-08T07:30",
+   "template": "{{date}} {{title}}\n",
+   "expected": "[[2026-10]] [[2026-Q4]] [[2026]]\n\n2026-09-28 2026-W40\n"
+  },
+  {
+   "period": "daily",
+   "date": "2026-11-08",
+   "now": "2026-11-09T21:45",
+   "template": "---\ndate: x\n",
+   "expected": "[[2026-W45]] [[2026-11]] [[2026-Q4]] [[2026]]\n\n---\ndate: x\n"
+  },
+  {
+   "period": "quarterly",
+   "date": "2026-11-08",
+   "now": "2026-11-09T21:45",
+   "template": "{{time}} {{date:M/D}} {{time:HH.mm}} {{title}}",
+   "expected": "[[2026]]\n\n21:45 10/1 21.45 2026-Q4"
+  },
+  {
+   "period": "daily",
+   "date": "2026-11-08",
+   "now": "2026-11-09T21:45",
+   "template": "{{time:YYYY-MM-DD HH:mm}}\n",
+   "expected": "[[2026-W45]] [[2026-11]] [[2026-Q4]] [[2026]]\n\n2026-11-09 21:45\n"
+  }
+ ]
+}

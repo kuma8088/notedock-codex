@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ノート</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header id="bar">
+  <button id="nav-back" type="button" title="前に開いたノートへ戻る" aria-label="戻る" disabled>←</button>
+  <button id="nav-forward" type="button" title="次のノートへ進む" aria-label="進む" disabled>→</button>
+  <button id="open-note" type="button" title="ノートを探す（Cmd+O）">探す</button>
+  <button id="new-note" type="button" title="新しいノートを作る" disabled>新しいノート</button>
+  <button id="today-note" type="button" title="今日のデイリーノートを開く（なければ作る）">今日のノート</button>
+  <div id="note-path"></div>
+  <button id="copy-path" type="button" title="このノートのファイルの場所をコピーする" disabled>パスをコピー</button>
+  <div id="status"><button id="ai-share-on" type="button" aria-pressed="false" aria-label="開いているノートをAIに伝える" title="開いているノートをAIに伝える：オフ（押すとオンにして、ノートの場所と選んでいる行の番号を、Codexの会話に伝えます）">AI</button><span id="status-alert" role="status" hidden></span><span id="status-text" role="status"></span></div>
+  <button id="toggle-calendar" type="button" title="カレンダーを出す・隠す">カレンダー</button>
+  <button id="toggle-files" type="button" title="フォルダーからノートを開く">ファイル</button>
+  <button id="toggle-outline" type="button" title="目次">目次</button>
+  <button id="open-history" type="button" title="バックアップから戻す">履歴</button>
+  <button id="open-settings" type="button" title="画像と日付ごとのノートの置き場を決める">設定</button>
+  <div id="modes" role="group" aria-label="表示のしかた">
+    <button type="button" data-mode="reading" title="閲覧（Cmd+Eで切り替え）">閲覧</button>
+    <button type="button" data-mode="live" title="編集（Cmd+Eで切り替え）">編集</button>
+    <button type="button" data-mode="source" title="ソース">ソース</button>
+  </div>
+</header>
+<div id="toolbar" role="toolbar" aria-label="書式" hidden>
+  <div class="tool-group">
+    <button type="button" data-action="heading" title="見出しの大きさ" aria-haspopup="menu"><span id="toolbar-heading-label">見出し</span> ▾</button>
+  </div>
+  <div class="tool-group">
+    <button type="button" data-action="bold" class="tool-bold" title="太字（Cmd+B）">B</button>
+    <button type="button" data-action="italic" class="tool-italic" title="斜体（Cmd+I）">I</button>
+    <button type="button" data-action="strike" class="tool-strike" title="取り消し線">S</button>
+    <button type="button" data-action="code" title="文中のコード">コード</button>
+  </div>
+  <div class="tool-group">
+    <button type="button" data-action="bullet" title="箇条書き">箇条書き</button>
+    <button type="button" data-action="number" title="番号付きの箇条書き">番号</button>
+    <button type="button" data-action="task" title="チェック項目">チェック</button>
+    <button type="button" data-action="quote" title="引用">引用</button>
+  </div>
+  <div class="tool-group">
+    <button type="button" data-action="link" title="リンク（Cmd+K）">リンク</button>
+    <button type="button" data-action="image" title="画像を選んで入れる">画像</button>
+    <button type="button" data-action="table" title="表を入れる（Cmd+Shift+T）">表</button>
+    <button type="button" data-action="rule" title="区切り線">区切り線</button>
+    <button type="button" data-action="codeblock" title="コードのまとまり">コード枠</button>
+    <button type="button" data-action="callout" title="色付きの囲み" aria-haspopup="menu">囲み ▾</button>
+  </div>
+  <input id="toolbar-image" type="file" accept="image/*" hidden>
+</div>
+<div id="banner" hidden></div>
+<main id="layout">
+  <div id="editor">
+    <div id="paste-hint" role="status" hidden>コピーしたパスをここに貼り付けると、そのノートが開きます。<kbd>Cmd+V</kbd></div>
+  </div>
+  <aside id="outline" hidden aria-label="目次"></aside>
+  <div id="side">
+    <section id="calendar" aria-label="カレンダー"></section>
+    <nav id="files" hidden aria-label="ファイルの一覧"></nav>
+  </div>
+</main>
+<dialog id="switcher" aria-label="ノートを探す">
+  <input id="switcher-input" type="search" placeholder="名前で探す。ない名前なら新しく作れます。パスを貼っても開けます" autocomplete="off">
+  <ul id="switcher-list"></ul>
+</dialog>
+<dialog id="history" aria-label="バックアップから戻す">
+  <div class="history-grid">
+    <ul id="history-list"></ul>
+    <pre id="history-text"></pre>
+  </div>
+  <div class="dialog-actions">
+    <button id="history-restore" type="button" disabled>この内容に戻す</button>
+    <button id="history-close" type="button">閉じる</button>
+  </div>
+</dialog>
+<dialog id="compare" aria-label="違いを見る">
+  <div class="compare-grid">
+    <section><h2 id="compare-mine-title">自分の内容</h2><pre id="compare-mine"></pre></section>
+    <section><h2 id="compare-theirs-title">保存されているファイル</h2><pre id="compare-theirs"></pre></section>
+  </div>
+  <form method="dialog"><button>閉じる</button></form>
+</dialog>
+<script type="module" src="/assets/main.js"></script>
+</body>
+</html>
